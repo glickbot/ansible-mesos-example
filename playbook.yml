@@ -1,0 +1,10 @@
+- hosts: mesos_masters
+  roles:
+  - mesos-master
+
+- hosts: mesos_dns_slave
+  - { role: 'mesos-dns-server', ns1: 10.0.80.11, ns2: 10.0.80.12 }
+
+- hosts: mesos_slaves
+  roles:
+  - { role: 'mesos-dns-client', mesos_dns_masters: mesos_masters }

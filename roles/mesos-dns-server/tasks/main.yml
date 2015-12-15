@@ -1,0 +1,12 @@
+- file: dest=/opt/mesos-dns state=directory
+- command: chdir=/opt/mesos-dns wget https://github.com/mesosphere/mesos-dns/releases/download/v0.4.0/mesos-dns-v0.4.0-linux-amd64.gz creates=mesos-dns-v0.4.0-linux-amd64.gz
+- command: chdir=/opt/mesos-dns gunzip mesos-dns-v0.4.0-linux-amd64.gz creates=mesos-dns-v0.4.0-linux-amd64
+- file: dest=/opt/mesos-dns/mesos-dns-v0.4.0-linux-amd64 mode=755
+- template: src=config.json dest=/opt/mesos-dns/config.json
+- local_action: template src=mesos-dns.marathon.json dest=./tmp.marathon-deploy.mesos-dns.json
+- name: Kick off mesos-dns
+  uri: url=http://{{ mesos_master }}:8080/v2/apps/{{app_name}}
+       method=PUT
+       body='{{ lookup("file", "./tmp.marathon-deploy.mesos-dns.json") }}'
+       HEADER_Content-Type="application/json"
+       status_code=200,201,204

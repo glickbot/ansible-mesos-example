@@ -1,0 +1,34 @@
+- apt_key: keyserver=keyserver.ubuntu.com id=E56151BF
+- apt_repository: repo='deb http://repos.mesosphere.io/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} main' state=present
+- apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9
+- apt_repository: repo='deb https://get.docker.io/{{ ansible_lsb.id | lower }} docker main' state=present
+- apt_repository: repo='ppa:openjdk-r/ppa' state=present
+- apt: upgrade=yes
+- apt: name={{ item }} state=present
+  with_items:
+  - make
+  - git
+  - gcc
+  - g++
+  - curl
+  - python-dev
+  - libcppunit-dev
+  - libunwind8-dev
+  - autoconf
+  - autotools-dev
+  - libltdl-dev
+  - libtool
+  - autopoint
+  - libcurl4-openssl-dev
+  - libsasl2-dev
+  - openjdk-8-jdk
+  - default-jre
+  - python-setuptools
+  - python-protobuf
+  - libprotobuf-dev
+  - protobuf-compiler
+  - mesos
+  - marathon
+  - lxc-docker
+
+- command: update-java-alternatives -s /usr/lib/jvm/java-1.8.0-openjdk-amd64
