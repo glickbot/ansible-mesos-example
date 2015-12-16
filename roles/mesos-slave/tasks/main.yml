@@ -1,0 +1,5 @@
+- copy: dest=/etc/mesos/zk content="{{ zk_config }}\n"
+  notify: restart mesos-slave
+- service: name={{ item }} state=started
+  with_items:
+  - mesos-slave

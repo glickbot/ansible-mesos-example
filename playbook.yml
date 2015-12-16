@@ -2,9 +2,23 @@
   roles:
   - mesos-master
 
-- hosts: mesos_dns_slave
-  - { role: 'mesos-dns-server', ns1: 10.0.80.11, ns2: 10.0.80.12 }
+- hosts: mesos_slaves
+  vars:
+  - mesos_master: "{{ hostvars[groups.mesos_masters[0]].ansible_eth0.ipv4.address }}"
+  roles:
+  - { role: 'mesos-slave', zk_config: "zk://{{ mesos_master }}:2181/mesos" }
+
+- hosts: mesos_dns
+  vars:
+  - mesos_master: "{{ hostvars[groups.mesos_masters[0]].ansible_eth0.ipv4.address }}"
+  - marathon_deploy: "{{ groups.mesos_masters[0] }}"
+  roles:
+  - { role: 'mesos-dns-server',
+  	ns1: 10.0.80.11,
+  	ns2: 10.0.80.12,
+  	marathon_deploy: "{{ marathon_deploy }}",
+  	mesos_master: "{{ mesos_master }}" }
 
 - hosts: mesos_slaves
   roles:
-  - { role: 'mesos-dns-client', mesos_dns_masters: mesos_masters }
+  - { role: 'mesos-dns-client', nameserver: "{{ hostvars[groups.mesos_dns[0]].ansible_eth0.ipv4.address }}" }

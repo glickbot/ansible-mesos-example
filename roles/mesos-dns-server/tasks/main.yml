@@ -3,9 +3,18 @@
 - command: chdir=/opt/mesos-dns gunzip mesos-dns-v0.4.0-linux-amd64.gz creates=mesos-dns-v0.4.0-linux-amd64
 - file: dest=/opt/mesos-dns/mesos-dns-v0.4.0-linux-amd64 mode=755
 - template: src=config.json dest=/opt/mesos-dns/config.json
+  notify: restart mesos-dns
+
+- apt: name=python-httplib2 state=installed
+- uri:
+    url: "http://localhost:5051/slave(1)/state.json"
+  register: mesos_state
+- set_fact:
+    mesos_hostname: "{{ mesos_state.json.hostname }}"
+
 - local_action: template src=mesos-dns.marathon.json dest=./tmp.marathon-deploy.mesos-dns.json
 - name: Kick off mesos-dns
-  uri: url=http://{{ mesos_master }}:8080/v2/apps/{{app_name}}
+  uri: url=http://{{ marathon_deploy }}:8080/v2/apps/mesos-dns
        method=PUT
        body='{{ lookup("file", "./tmp.marathon-deploy.mesos-dns.json") }}'
        HEADER_Content-Type="application/json"

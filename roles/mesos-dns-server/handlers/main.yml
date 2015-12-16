@@ -1,0 +1,5 @@
+- name: restart mesos-dns
+  uri: url=http://{{ marathon_deploy }}:8080/v2/apps/mesos-dns/restart
+       method=POST
+       HEADER_Content-Type="application/json"
+       status_code=200,201,204

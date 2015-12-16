@@ -1,0 +1,5 @@
+- service: name={{ item }} state=started
+  with_items:
+  - zookeeper
+  - mesos-master
+  - marathon
