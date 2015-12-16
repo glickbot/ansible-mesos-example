@@ -1,4 +1,4 @@
-ansible-mesos-example
+hachiman-stack
 ================
 ### Ansible scripts to start mesos, mesos-dns, marathon, and docker
 
