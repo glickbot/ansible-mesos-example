@@ -1,3 +1,4 @@
+- lineinfile: dest=/etc/mesos-master/roles line="riak"
 - service: name={{ item }} state=started
   with_items:
   - zookeeper
