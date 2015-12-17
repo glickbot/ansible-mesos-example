@@ -4,9 +4,9 @@ hachiman-stack
 
 ### Usage
 
-- Install Ansible following the [http://docs.ansible.com/ansible/intro_installation.html](installation instructions for your platform).
+- Install Ansible following the [installation instructions for your platform](http://docs.ansible.com/ansible/intro_installation.html).
 
-- Checkout the [https://github.com/basho-labs/hachiman-stack](hachiman-stack repo):
+- Checkout the [hachiman-stack repo](https://github.com/basho-labs/hachiman-stack):
 ```
 git clone https://github.com/basho-labs/hachiman-stack.git
 ```
