@@ -1,6 +1,7 @@
 - hosts: mesos_masters
   roles:
   - mesos-master
+  - marathon-nginx-shim
 
 - hosts: mesos_slaves
   vars:

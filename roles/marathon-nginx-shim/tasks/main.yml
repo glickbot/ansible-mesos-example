@@ -1,0 +1,11 @@
+- apt: name=nginx state=installed
+- apt: name=python-pip state=installed
+- command: pip install flask
+- template: src=admin-router dest=/etc/nginx/sites-available/default
+- file: state=link dest=/etc/nginx/sites-enabled/default src=/etc/nginx/sites-available/default
+- file: dest=/opt/shim state=directory
+- template: src=shim.py dest=/opt/shim/shim.py mode=775
+- file: dest=/opt/shim/shims state=directory
+- template: src=update_nginx.sh dest=/opt/shim/update_nginx.sh mode=775
+- template: src=shim.conf dest=/etc/init/shim.conf
+- service: name=shim state=started
