@@ -24,3 +24,5 @@ mesos_slaves
 
 [mesos:vars]
 ansible_ssh_user=root
+ns1=10.0.80.11
+ns2=10.0.80.12

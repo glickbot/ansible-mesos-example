@@ -1,5 +1,9 @@
+- apt: name=lxc-docker state=installed
 - copy: dest=/etc/mesos/zk content="{{ zk_config }}\n"
-- copy: dest=/etc/mesos-slave/containerizers content="docker,mesos"
+  notify: restart mesos-slave
+- copy: dest=/etc/mesos-slave/containerizers content="docker,mesos\n"
+  notify: restart mesos-slave
+- copy: dest=/etc/mesos-slave/executor_registration_timeout content="5mins\n"
   notify: restart mesos-slave
 - service: name={{ item }} state=started
   with_items:

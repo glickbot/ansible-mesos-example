@@ -2,7 +2,9 @@
 - apt: name=python-pip state=installed
 - command: pip install flask
 - template: src=admin-router dest=/etc/nginx/sites-available/default
+  notify: restart nginx
 - file: state=link dest=/etc/nginx/sites-enabled/default src=/etc/nginx/sites-available/default
+  notify: restart nginx
 - file: dest=/opt/shim state=directory
 - template: src=shim.py dest=/opt/shim/shim.py mode=775
 - file: dest=/opt/shim/shims state=directory

@@ -1,6 +1,8 @@
 - hosts: mesos_masters
+  vars:
+  - mesos_master: "{{ hostvars[groups.mesos_masters[0]].ansible_eth0.ipv4.address }}"
   roles:
-  - mesos-master
+  - { role: 'mesos-master', zk_config: "zk://{{ mesos_master }}:2181/mesos" }
   - marathon-nginx-shim
 
 - hosts: mesos_slaves
@@ -15,8 +17,6 @@
   - marathon_deploy: "{{ groups.mesos_masters[0] }}"
   roles:
   - { role: 'mesos-dns-server',
-  	ns1: 10.0.80.11,
-  	ns2: 10.0.80.12,
   	marathon_deploy: "{{ marathon_deploy }}",
   	mesos_master: "{{ mesos_master }}" }
 

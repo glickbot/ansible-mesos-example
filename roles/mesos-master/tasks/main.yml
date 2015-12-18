@@ -1,4 +1,15 @@
-- lineinfile: dest=/etc/mesos-master/roles line="riak"
+- apt: name=marathon state=installed
+- lineinfile: dest=/etc/mesos-master/roles line="riak" create=yes
+  notify: restart mesos-master
+- lineinfile: dest=/etc/mesos-master/roles line="replicated_log" create=yes
+  notify: restart mesos-master
+- lineinfile: "dest=/etc/zookeeper/conf/zoo.cfg line='server.1={{ mesos_master }}:2888:3888' create=yes"
+- file: dest=/etc/zookeeper/conf/myid content="1"
+  notify: restart zookeeper
+- file: dest=/etc/mesos-master/quorum content="1"
+  notify: restart mesos-master
+- copy: dest=/etc/mesos/zk content="{{ zk_config }}\n"
+  notify: restart mesos-master
 - service: name={{ item }} state=started
   with_items:
   - zookeeper

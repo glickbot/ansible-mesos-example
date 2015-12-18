@@ -28,7 +28,5 @@
   - libprotobuf-dev
   - protobuf-compiler
   - mesos
-  - marathon
-  - lxc-docker
 
 - command: update-java-alternatives -s /usr/lib/jvm/java-1.8.0-openjdk-amd64
