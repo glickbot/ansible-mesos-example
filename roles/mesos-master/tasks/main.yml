@@ -2,7 +2,7 @@
 - lineinfile: dest=/etc/init/marathon.conf regexp='^exec /usr/bin/marathon.*' line='exec /usr/bin/marathon --event_subscriber http_callback --http_endpoints http://localhost:5000/eventbus'
 - lineinfile: dest=/etc/mesos-master/roles line="riak" create=yes
   notify: restart mesos-master
-- lineinfile: dest=/etc/mesos-master/roles line="replicated_log" create=yes
+- lineinfile: dest=/etc/mesos-master/registry line="replicated_log" create=yes
   notify: restart mesos-master
 - lineinfile: "dest=/etc/zookeeper/conf/zoo.cfg line='server.1={{ mesos_master }}:2888:3888' create=yes"
 - file: dest=/etc/zookeeper/conf/myid content="1"
