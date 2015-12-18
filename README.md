@@ -21,7 +21,7 @@ Checkout the [hachiman-stack repo](https://github.com/basho-labs/hachiman-stack)
 	git clone https://github.com/basho-labs/hachiman-stack.git
 	cd hachiman-stack
 
-Copy and modify ```hosts.ini.example``` to ```hosts.ini``` with information pertaining to your enviornment:
+Copy and modify ```hosts.ini.example``` to ```hosts.ini``` with information pertaining to your environment:
 
 	cp hosts.ini.example hosts.ini
 	
@@ -101,10 +101,32 @@ View dcos help for spark usage:
 Add the Riak Repo to dcos package.sources (see [http://github.com/basho-labs/riak-mesos](http://github.com/basho-labs/riak-mesos) for url):
 
 	dcos config prepend package.sources "<riak-dcos repo zip>"
+	dcos package update
 
-Install the DCOS-CLI Riak package:
+Create a configuration json file:
 
-	dcos pacakge install riak
+[Follow These Instructions](https://github.com/basho-labs/riak-mesos#create-a-configuration-file)
+
+	{
+	    "riak": {
+	        "master": "zk://master.mesos:2181/mesos",
+	        "zk": "master.mesos:2181",
+	        "user": "root",
+	        "framework-name": "riak",
+	        "flags": "",
+	        "node": {
+	            "cpus": 1,
+	            "mem": 8000,
+	            "disk": 20000
+	        }
+	    }
+	}
+
+
+
+Install the DCOS-CLI Riak package (i.e. ```dcos-riak.json```):
+
+	dcos package install riak --options=dcos-riak.json
 
 View dcos help for Riak usage:
 

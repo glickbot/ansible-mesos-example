@@ -8,3 +8,11 @@
 - service: name={{ item }} state=started
   with_items:
   - mesos-slave
+- service: name={{ item }} state=stopped
+  with_items:
+  - zookeeper
+  - mesos-master
+- copy: dest=/etc/init/{{ item }}.override contents="manual"
+  with_items:
+  - zookeeper
+  - mesos-master

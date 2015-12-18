@@ -1,4 +1,5 @@
 - apt: name=marathon state=installed
+- lineinfile: dest=/etc/init/marathon.conf regexp='^exec /usr/bin/marathon.*' line='exec /usr/bin/marathon --event_subscriber http_callback --http_endpoints http://localhost:5000/eventbus'
 - lineinfile: dest=/etc/mesos-master/roles line="riak" create=yes
   notify: restart mesos-master
 - lineinfile: dest=/etc/mesos-master/roles line="replicated_log" create=yes
