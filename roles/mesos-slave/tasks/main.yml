@@ -12,7 +12,7 @@
   with_items:
   - zookeeper
   - mesos-master
-- copy: dest=/etc/init/{{ item }}.override contents="manual"
+- copy: dest=/etc/init/{{ item }}.override content="manual"
   with_items:
   - zookeeper
   - mesos-master
