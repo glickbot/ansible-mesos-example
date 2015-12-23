@@ -2,6 +2,7 @@
 - apt_repository: repo='deb http://repos.mesosphere.io/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} main' state=present
 - apt_key: keyserver=keyserver.ubuntu.com id=36A1D7869245C8950F966E92D8576A8BA88D21E9
 - apt_repository: repo='deb https://get.docker.io/{{ ansible_lsb.id | lower }} docker main' state=present
+- apt_key: keyserver=keyserver.ubuntu.com id=EB9B1D8886F44E2A
 - apt_repository: repo='ppa:openjdk-r/ppa' state=present
 - apt: upgrade=yes
 - apt: name={{ item }} state=present
